@@ -37,7 +37,7 @@ class Greeting extends StatelessWidget {
               height: 5,
             ),
             const Text(
-              "Discover The India",
+              "Discover the India",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
