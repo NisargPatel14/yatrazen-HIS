@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:v4/screens/Home/home.dart';
-import 'package:v4/screens/translate/translate.dart';
-import 'package:v4/screens/weather/weather.dart';
-import 'package:v4/screens/hospital/hospital.dart';
-import 'package:v4/screens/emergency/emergency.dart';
-import 'package:v4/screens/yatri/yatri.dart';
-import 'package:v4/screens/explore/explore.dart';
-import 'package:v4/screens/feedback/feedback.dart';
-import 'package:v4/screens/auth/auth.dart';
-import 'package:v4/controllers/location_controller.dart';
-import 'package:v4/screens/auth/api/auth_api.dart';
-import 'package:v4/screens/auth/pages/login_page.dart';
-import 'package:v4/screens/auth/pages/register_page.dart';
-import 'package:v4/screens/auth/pages/account_page.dart';
+import 'package:yatrazen/screens/Home/home.dart';
+// import 'package:v4/screens/translate/translate.dart';
+// import 'package:v4/screens/weather/weather.dart';
+// import 'package:v4/screens/hospital/hospital.dart';
+// import 'package:v4/screens/emergency/emergency.dart';
+// import 'package:v4/screens/yatri/yatri.dart';
+// import 'package:v4/screens/explore/explore.dart';
+// import 'package:v4/screens/feedback/feedback.dart';
+// import 'package:v4/screens/auth/auth.dart';
+// import 'package:v4/controllers/location_controller.dart';
+// import 'package:v4/screens/auth/api/auth_api.dart';
+// import 'package:v4/screens/auth/pages/login_page.dart';
+// import 'package:v4/screens/auth/pages/register_page.dart';
+// import 'package:v4/screens/auth/pages/account_page.dart';
 
 void main() {
   runApp(
@@ -68,19 +68,19 @@ class MyApp extends StatelessWidget {
               body: Center(child: CircularProgressIndicator()),
             ),
         '/': (context) => const Home(),
-        '/auth': (context) => const Auth(),
-        '/translate': (context) => const Translate(),
-        '/weather': (context) => const Weather(
-              location: "Mehsana",
-            ),
-        '/hospital': (context) => const Hospital(),
-        '/emergency': (context) => const Emergency(),
-        '/yatri': (context) => const Yatri(),
-        '/explore': (context) => const Explore(),
-        '/login': (context) => const LoginPage(),
-        '/feedback': (context) => const FeedbackForm(),
-        '/register': (context) => const RegisterPage(),
-        '/account': (context) => const AccountPage(),
+        // '/auth': (context) => const Auth(),
+        // '/translate': (context) => const Translate(),
+        // '/weather': (context) => const Weather(
+        //       location: "Mehsana",
+        //     ),
+        // '/hospital': (context) => const Hospital(),
+        // '/emergency': (context) => const Emergency(),
+        // '/yatri': (context) => const Yatri(),
+        // '/explore': (context) => const Explore(),
+        // '/login': (context) => const LoginPage(),
+        // '/feedback': (context) => const FeedbackForm(),
+        // '/register': (context) => const RegisterPage(),
+        // '/account': (context) => const AccountPage(),
       },
     );
   }

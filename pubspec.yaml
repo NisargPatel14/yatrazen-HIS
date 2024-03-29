@@ -1,4 +1,4 @@
-name: Yatrazen
+name: yatrazen
 description: "Your Personal Travel Safty Assistant"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
