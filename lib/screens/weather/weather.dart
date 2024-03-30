@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class Weather extends StatefulWidget {
   final String location;
 
-  const Weather({super.key, required this.location});
+  const Weather({Key? key, required this.location}) : super(key: key);
 
   @override
   _WeatherState createState() => _WeatherState();
@@ -19,14 +19,14 @@ class _WeatherState extends State<Weather> {
   @override
   void initState() {
     super.initState();
-    _fetchWeatherData(widget.location);
+    _fetchWeatherData();
   }
 
-  Future<void> _fetchWeatherData(String location) async {
+  Future<void> _fetchWeatherData() async {
     final currentWeatherUrl =
-        'http://api.weatherapi.com/v1/current.json?key=4e66b71c66fb48bdb4275305241202&q=$location';
+        'http://api.weatherapi.com/v1/current.json?key=4e66b71c66fb48bdb4275305241202&q=${widget.location}';
     final forecastUrl =
-        'http://api.weatherapi.com/v1/forecast.json?key=4e66b71c66fb48bdb4275305241202&q=$location&days=7';
+        'http://api.weatherapi.com/v1/forecast.json?key=4e66b71c66fb48bdb4275305241202&q=${widget.location}&days=7';
 
     try {
       final currentWeatherResponse =
@@ -56,9 +56,13 @@ class _WeatherState extends State<Weather> {
     return Scaffold(
       backgroundColor: const Color(0xff0E1219),
       appBar: AppBar(
-        title: Text(
-          "jaipur",
-          style: Theme.of(context).textTheme.bodySmall,
+        title:const Text(
+          "Weather",
+          style: TextStyle(
+            color:  Color(0xffffffff),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          )
         ),
         backgroundColor: const Color(0xff0E1219),
         iconTheme: const IconThemeData(color: Color(0xffffffff)),
@@ -77,7 +81,11 @@ class _WeatherState extends State<Weather> {
             if (index == 0) {
               return Center(
                 child: Text(
-                  "Current weather in ${widget.location}: $_currentWeather, Temperature: $_currentTemp°C",
+                  textAlign: TextAlign.center,
+                  widget.location == "Mumbai"
+                      ? "Loading..."
+                      :
+                  "Current weather \nAddress:${widget.location.split(',')[4]}${widget.location.split(',')[5]} \nWeather Type : $_currentWeather, \nTemperature: $_currentTemp°C",
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
