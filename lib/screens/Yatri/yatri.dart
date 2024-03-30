@@ -53,6 +53,8 @@ class _YatriState extends State<Yatri> {
     }
   }
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,10 +111,15 @@ class _YatriState extends State<Yatri> {
                         (states) => const Color.fromARGB(255, 41, 105, 214)),
                   ),
                   icon: _isLoading
-                      ? CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
-                        )
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                        child:  CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                      )
                       : SvgPicture.asset(
                           'assets/SVG/tick.svg',
                           width: 24,
@@ -172,11 +179,12 @@ class ChatBubble extends StatelessWidget {
                     ? MarkdownBody(
                         data: message.text,
                         styleSheet: MarkdownStyleSheet(
-                          p: const TextStyle(color: Colors.white),
+                          p: const TextStyle(color: Colors.white ,),
                         ),
                       )
                     : Text(
                         message.text,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white),
                       ),
               ),
