@@ -71,11 +71,11 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Home(),
         '/auth': (context) => const Auth(),
         '/translate': (context) => const Translate(),
-        // '/weather': (context) => const Weather(
-        //       location: "Mehsana",
-        //     ),
+        '/weather': (context) => const Weather(
+              location: "Mehsana",
+            ),
         '/hospital': (context) => const Hospital(),
-        // '/emergency': (context) => const Emergency(),
+        '/emergency': (context) => const Emergency(),
         '/yatri': (context) => const Yatri(),
         '/explore': (context) => const Explore(),
         '/login': (context) => const LoginPage(),
