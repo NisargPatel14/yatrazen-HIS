@@ -4,18 +4,18 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatrazen/screens/Home/home.dart';
 import 'package:yatrazen/screens/translate/translate.dart';
-// import 'package:v4/screens/weather/weather.dart';
+import 'package:yatrazen/screens/Weather/weather.dart';
 import 'package:yatrazen/screens/hospital/hospital.dart';
-// import 'package:v4/screens/emergency/emergency.dart';
+import 'package:yatrazen/screens/emergency/emergency.dart';
 import 'package:yatrazen/screens/Yatri/yatri.dart';
 import 'package:yatrazen/screens/explore/explore.dart';
-// import 'package:v4/screens/feedback/feedback.dart';
+import 'package:yatrazen/screens/feedback/feedback.dart';
 import 'package:yatrazen/screens/auth/auth.dart';
 import 'package:yatrazen/controllers/location_controller.dart';
 import 'package:yatrazen/screens/auth/api/auth_api.dart';
-// import 'package:v4/screens/auth/pages/login_page.dart';
-// import 'package:v4/screens/auth/pages/register_page.dart';
-// import 'package:v4/screens/auth/pages/account_page.dart';
+import 'package:yatrazen/screens/auth/pages/login_page.dart';
+import 'package:yatrazen/screens/auth/pages/register_page.dart';
+import 'package:yatrazen/screens/auth/pages/account_page.dart';
 
 void main() {
   runApp(
@@ -78,10 +78,10 @@ class MyApp extends StatelessWidget {
         // '/emergency': (context) => const Emergency(),
         '/yatri': (context) => const Yatri(),
         '/explore': (context) => const Explore(),
-        // '/login': (context) => const LoginPage(),
-        // '/feedback': (context) => const FeedbackForm(),
-        // '/register': (context) => const RegisterPage(),
-        // '/account': (context) => const AccountPage(),
+        '/login': (context) => const LoginPage(),
+        '/feedback': (context) => const FeedbackForm(),
+        '/register': (context) => const RegisterPage(),
+        '/account': (context) => const AccountPage(),
       },
     );
   }
