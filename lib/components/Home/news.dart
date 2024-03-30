@@ -31,7 +31,7 @@ Future<void> fetchNews() async {
   try {
     const apiKey = "KNYKNyVwCPOB-hdJPcNtPTwhL8UD9ZX2zv1d5ov2M30";
     const apiUrl = "https://api.newscatcherapi.com/v2/search";
-    const queryString = "travel safety";
+    const queryString = "travel";
     final params = {
       ...commonParams,
       "q":
