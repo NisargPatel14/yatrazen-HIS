@@ -27,13 +27,17 @@ class _YatriState extends State<Yatri> {
       generationConfig: GenerationConfig(maxOutputTokens: 500),
     );
     _chat = _model.startChat(history: [
-      Content.text(
-          'Hi, I am Yatri, your travel assistant. Your safety, security, and satisfaction are my top priorities. I can provide you with travel advisories, safety tips, and assist you with any travel-related queries. I am embedded as a Personal AI in YatraZen app. How can I help you today?'),
-      Content.model([
-        TextPart(
-            "At Yatri, we prioritize the safety, security, and satisfaction of our users. We are equipped to provide you with the latest travel advisories, safety guidelines, and comprehensive assistance for all your travel needs. Please feel free to ask any questions.")
-      ])
-    ]);
+          Content.text(
+              'Hi, I am Yatri, your travel assistant. Your safety, security, and satisfaction are my top priorities. I can provide you with travel advisories, safety tips, and assist you with any travel-related queries. I am embedded as a Personal AI in YatraZen app. How can I help you today?'),
+          Content.model([
+            TextPart(
+                "At Yatri, we prioritize the safety, security, and satisfaction of our users. We are equipped to provide you with the latest travel advisories, safety guidelines, and comprehensive assistance for all your travel needs. Please feel free to ask any questions.")
+          ]),
+          Content.text('What is your name?'),
+          Content.model([
+            TextPart('My name is Yatri, your personal AI travel assistant.')
+          ])
+        ]);
   }
 
   Future<void> sendMessage(String? text) async {
