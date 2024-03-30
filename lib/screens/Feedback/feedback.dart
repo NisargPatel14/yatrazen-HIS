@@ -54,7 +54,6 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
       margin: const EdgeInsets.all(10.0),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Form(
@@ -110,6 +109,7 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
                     labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white))),
+                style: const TextStyle(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your feedback';
