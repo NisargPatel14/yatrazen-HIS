@@ -445,3 +445,6 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
     );
   }
 }
+
+
+// location path is changed
