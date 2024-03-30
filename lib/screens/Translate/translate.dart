@@ -17,6 +17,8 @@ class _TranslateUIState extends State<Translate> {
   String searchString = '';
   String resultString = '';
 
+  bool _isLoading = false;
+
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController inputTextEditingController =
       TextEditingController();
@@ -237,27 +239,39 @@ class _TranslateUIState extends State<Translate> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      final value1 = languages.entries
-                          .firstWhere(
-                              (element) => element.value == selectedValue1)
-                          .key;
-                      final value2 = languages.entries
-                          .firstWhere(
-                              (element) => element.value == selectedValue2)
-                          .key;
+                    onPressed: _isLoading
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            final value1 = languages.entries
+                                .firstWhere((element) =>
+                                    element.value == selectedValue1)
+                                .key;
+                            final value2 = languages.entries
+                                .firstWhere((element) =>
+                                    element.value == selectedValue2)
+                                .key;
 
-                      if (searchString.isNotEmpty) {
-                        final response = await fetchTranslation(
-                          searchString.toString(),
-                          fromLanguage: value1.isNotEmpty ? value1 : 'auto',
-                          toLanguage: value2.isNotEmpty ? value2 : 'en',
-                        );
-                        setState(() {
-                          resultString = response;
-                        });
-                      }
-                    },
+                            if (searchString.isNotEmpty) {
+                              final response = await fetchTranslation(
+                                searchString.toString(),
+                                fromLanguage:
+                                    value1.isNotEmpty ? value1 : 'auto',
+                                toLanguage: value2.isNotEmpty ? value2 : 'en',
+                              );
+                              setState(() {
+                                resultString = response;
+                                _isLoading = false;
+                              });
+                            } else {
+                              setState(() {
+                                resultString = 'Something Went Wrong!';
+                                _isLoading = false;
+                              });
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffF7C84C),
                       shape: RoundedRectangleBorder(
@@ -265,13 +279,22 @@ class _TranslateUIState extends State<Translate> {
                       ),
                       padding: const EdgeInsets.all(12),
                     ),
-                    child: const Text(
-                      'Translate',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                          child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                        )
+                        : const Text(
+                            'Translate',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(

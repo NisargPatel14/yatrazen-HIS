@@ -15,11 +15,13 @@ class Hospital extends StatefulWidget {
 
 class _HospitalState extends State<Hospital>
     with AutomaticKeepAliveClientMixin {
+
   LatLng _initialPosition = const LatLng(0, 0);
   List<dynamic> _nearbyHospitals = [];
 
   final locationController = Get.find<LocationController>();
-
+  bool _isLoading = true;
+  
   @override
   bool get wantKeepAlive => true;
 
@@ -56,6 +58,7 @@ class _HospitalState extends State<Hospital>
           );
           return {...hospital, 'distance': distanceInMeters};
         }).toList();
+        _isLoading = false;
       });
     } else {
       throw Exception('Failed to fetch nearby hospitals');
@@ -81,8 +84,10 @@ class _HospitalState extends State<Hospital>
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator( color: Color(0xffffffff)))
+          : SingleChildScrollView(
+              child: Column(
           children: [
             ListView.builder(
               shrinkWrap: true,
