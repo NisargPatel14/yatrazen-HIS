@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'languages.dart';
-// import 'translation_api.dart';
+import 'translation_api.dart';
 
 class Translate extends StatefulWidget {
   const Translate({super.key});
@@ -125,7 +125,6 @@ class _TranslateUIState extends State<Translate> {
                             ),
                           ),
                           items: languages.entries
-                          // languages data is not available yet (in the languages.dart file)
                               .map((item) => DropdownMenuItem(
                                     value: item.value,
                                     child: Text(
@@ -171,7 +170,6 @@ class _TranslateUIState extends State<Translate> {
                             ),
                           ),
                           items: languages.entries
-                          // languages data is not available yet (in the languages.dart file)
                               .map((item) => DropdownMenuItem(
                                     value: item.value,
                                     child: Text(
@@ -241,18 +239,23 @@ class _TranslateUIState extends State<Translate> {
                   child: ElevatedButton(
                     onPressed: () async {
                       final value1 = languages.entries
-                      // languages data is not available yet (in the languages.dart file)
                           .firstWhere(
                               (element) => element.value == selectedValue1)
                           .key;
                       final value2 = languages.entries
-                      // languages data is not available yet (in the languages.dart file)
                           .firstWhere(
                               (element) => element.value == selectedValue2)
                           .key;
 
                       if (searchString.isNotEmpty) {
-                        // fetch the responce from the api
+                        final response = await fetchTranslation(
+                          searchString.toString(),
+                          fromLanguage: value1.isNotEmpty ? value1 : 'auto',
+                          toLanguage: value2.isNotEmpty ? value2 : 'en',
+                        );
+                        setState(() {
+                          resultString = response;
+                        });
                       }
                     },
                     style: ElevatedButton.styleFrom(
