@@ -55,7 +55,12 @@ class _LoginFormState extends State<LoginForm> {
       );
 
       // Show a Snackbar upon successful login
-      
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login successful'),
+          duration: Duration(seconds: 2),
+        ),
+      );
 
       // Navigate to the home page
       Navigator.pushReplacementNamed(context, '/');
