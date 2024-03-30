@@ -17,18 +17,6 @@ Future<String> fetchTranslation(String text,
   final response = await http.get(uri);
 
   // Check if the response status code is successful (status code 200)
-  if (response.statusCode == 200) {
-    // Parse the JSON response
-    final jsonResponse = json.decode(response.body);
-
-    // Extract the result from the JSON
-    String result = jsonResponse['result'];
-
-    // Return the result
-    return result;
-  } else {
-    return 'Failed to fetch translation: ${response.statusCode}';
-  }
 }
 
 String encodeParams(Map<String, String> params) {
