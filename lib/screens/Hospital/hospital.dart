@@ -37,7 +37,7 @@ class _HospitalState extends State<Hospital>
   Future<void> _fetchNearbyHospitals() async {
     const apiKey =
         'AIzaSyA3wfl35CzCuXjk1wCkz64hZawNYyWjHDg'; // Replace with your Google Places API key
-    const radius = 1500;
+    const radius = 15000;
     final url =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=hospital&location=${_initialPosition.latitude},${_initialPosition.longitude}&radius=$radius&type=hospitals&key=$apiKey';
 
@@ -45,7 +45,17 @@ class _HospitalState extends State<Hospital>
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
-        _nearbyHospitals = data['results'];
+        _nearbyHospitals = data['results'].map((hospital) {
+          final lat = hospital['geometry']['location']['lat'];
+          final lng = hospital['geometry']['location']['lng'];
+          final distanceInMeters = Geolocator.distanceBetween(
+            _initialPosition.latitude,
+            _initialPosition.longitude,
+            lat,
+            lng,
+          );
+          return {...hospital, 'distance': distanceInMeters};
+        }).toList();
       });
     } else {
       throw Exception('Failed to fetch nearby hospitals');
@@ -85,7 +95,7 @@ class _HospitalState extends State<Hospital>
                     hospital['photos'] != null && hospital['photos'].isNotEmpty
                         ? hospital['photos'][0]['photo_reference']
                         : null;
-                final distance = hospital['geometry']['location']['lat'];
+                final distance = hospital['distance'];
                 final isOpen = hospital['opening_hours'] != null &&
                     hospital['opening_hours']['open_now'] == true;
 
@@ -105,7 +115,7 @@ class _HospitalState extends State<Hospital>
                             fit: BoxFit.cover,
                           ),
                     title: Text(name),
-                    subtitle: Text('Distance: $distance meters'),
+                    subtitle: Text('Distance: ${distance.round()} meters'),
                     trailing:
                         isOpen ? const Text('Open') : const Text('Closed'),
                   ),
