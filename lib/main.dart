@@ -8,7 +8,7 @@ import 'package:yatrazen/screens/translate/translate.dart';
 import 'package:yatrazen/screens/hospital/hospital.dart';
 // import 'package:v4/screens/emergency/emergency.dart';
 // import 'package:v4/screens/yatri/yatri.dart';
-// import 'package:v4/screens/explore/explore.dart';
+import 'package:yatrazen/screens/explore/explore.dart';
 // import 'package:v4/screens/feedback/feedback.dart';
 import 'package:yatrazen/screens/auth/auth.dart';
 import 'package:yatrazen/controllers/location_controller.dart';
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         '/hospital': (context) => const Hospital(),
         // '/emergency': (context) => const Emergency(),
         // '/yatri': (context) => const Yatri(),
-        // '/explore': (context) => const Explore(),
+        '/explore': (context) => const Explore(),
         // '/login': (context) => const LoginPage(),
         // '/feedback': (context) => const FeedbackForm(),
         // '/register': (context) => const RegisterPage(),

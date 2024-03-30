@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:yatrazen/controllers/location_controller.dart';
+import 'package:v4/controllers/location_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -48,10 +48,12 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
     }
   }
 
+  var circleColor = Colors.white.withOpacity(0.5);
+
   Future<List<int>> fetchScore(String city) async {
     final response = await http.get(
       Uri.parse(
-          'http://v3-server.vercel.app/senseScore/$city/?api_key=247da0f7b7f3bfcbea1b73a401cb426f'),
+          'http://192.168.214.2:5000/senseScore/$city/?api_key=247da0f7b7f3bfcbea1b73a401cb426f'),
     );
 
     print('Response status code: ${response.statusCode}');
@@ -78,6 +80,16 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
         negativeScorePercentage,
         neutralScorePercentage
       ];
+
+      // update the circle color based on the score
+      if (positiveScore > negativeScore && positiveScore > neutralScore) {
+        circleColor = Colors.green.withOpacity(0.5);
+      } else if (negativeScore > positiveScore &&
+          negativeScore > neutralScore) {
+        circleColor = Colors.red.withOpacity(0.5);
+      } else {
+        circleColor = Colors.yellow.withOpacity(0.5);
+      }
     } else {
       print('Failed to load score');
     }
@@ -100,9 +112,10 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
     });
   }
 
+  var position2 = const LatLng(0, 0);
   void updateCameraPosition() async {
     Position position = await locationController.getPosition();
-
+    position2 = LatLng(position.latitude, position.longitude);
     // Get the current zoom level
     double currentZoomLevel = await _mapController?.getZoomLevel() ?? 16.0;
 
@@ -189,6 +202,18 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                             zoom: 16.0,
                           ),
                           markers: _markers,
+                          // plot a circle around the current location
+                          circles: {
+                            Circle(
+                              circleId: const CircleId('current_position'),
+                              center: LatLng(
+                                  position2.latitude, position2.longitude),
+                              radius: 200,
+                              // make color dynamic based on the score
+                              fillColor: circleColor,
+                              strokeWidth: 0,
+                            ),
+                          },
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -311,7 +336,10 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                         side: const BorderSide(color: Colors.white),
                       ),
                     ),
-                    child: const Text('Go to Feedback',  style: TextStyle(color: Colors.black),),
+                    child: const Text(
+                      'Go to Feedback',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -332,7 +360,8 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                         side: const BorderSide(color: Colors.white),
                       ),
                     ),
-                    child: const Text('Fetch Score',  style: TextStyle(color: Colors.black)),
+                    child: const Text('Fetch Score',
+                        style: TextStyle(color: Colors.black)),
                   ),
                 ],
               ),
