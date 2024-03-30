@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatrazen/screens/Home/home.dart';
 import 'package:yatrazen/screens/translate/translate.dart';
-import 'package:yatrazen/screens/Weather/weather.dart';
+import 'package:yatrazen/screens/weather/weather.dart';
 import 'package:yatrazen/screens/hospital/hospital.dart';
 import 'package:yatrazen/screens/emergency/emergency.dart';
 import 'package:yatrazen/screens/Yatri/yatri.dart';
