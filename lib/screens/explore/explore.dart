@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yatrazen/controllers/location_controller.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:google_maps_webservice/places.dart';
 
@@ -28,8 +26,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
 
   final locationController = Get.find<LocationController>();
 
-  final places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyA3wfl35CzCuXjk1wCkz64hZawNYyWjHDg');
+  final places = // get the google map places;
   // Create a set of markers
   final Set<Marker> _markers = {};
 
@@ -39,50 +36,11 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   Future<String> fetchCity(double lat, double lng) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
-    Placemark place = placemarks[0];
-    if (place.administrativeArea != null) {
-      return place.administrativeArea!;
-    } else {
-      return place.subAdministrativeArea!;
-    }
+    // Get the city name from the lat and lng
   }
 
   Future<List<int>> fetchScore(String city) async {
-    final response = await http.get(
-      Uri.parse(
-          'http://v3-server.vercel.app/senseScore/$city/?api_key=247da0f7b7f3bfcbea1b73a401cb426f'),
-    );
-
-    print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final scoresData = data['score'][0] as List<dynamic>;
-
-      final positiveScore = scoresData[0]['score'] as double;
-      final negativeScore = scoresData[1]['score'] as double;
-      final neutralScore = scoresData[2]['score'] as double;
-
-      int positiveScorePercentage = (positiveScore * 100).toInt();
-      int negativeScorePercentage = (negativeScore * 100).toInt();
-      int neutralScorePercentage = (neutralScore * 100).toInt();
-
-      print('Positive: $positiveScorePercentage');
-      print('Negative: $negativeScorePercentage');
-      print('Neutral: $neutralScorePercentage');
-
-      scores = [
-        positiveScorePercentage,
-        negativeScorePercentage,
-        neutralScorePercentage
-      ];
-    } else {
-      print('Failed to load score');
-    }
-
-    return scores;
+    `// Get the score of the city from the API and return the score
   }
 
   void updateMarker() async {
