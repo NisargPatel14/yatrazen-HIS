@@ -32,8 +32,7 @@ class _YatriState extends State<Yatri> {
       Content.model([
         TextPart(
             "At Yatri, we prioritize the safety, security, and satisfaction of our users. We are equipped to provide you with the latest travel advisories, safety guidelines, and comprehensive assistance for all your travel needs. Please feel free to ask any questions.")
-      ]),
-      Content.text('Yatri is embedded as a Personal AI in YatraZen app.')
+      ])
     ]);
   }
 
