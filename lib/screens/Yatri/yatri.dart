@@ -24,15 +24,16 @@ class _YatriState extends State<Yatri> {
     _model = GenerativeModel(
       model: 'gemini-pro',
       apiKey: apiKey,
-      generationConfig: GenerationConfig(maxOutputTokens: 300),
+      generationConfig: GenerationConfig(maxOutputTokens: 500),
     );
     _chat = _model.startChat(history: [
       Content.text(
-          'Hi, I am Yatri, your travel assistant. Your safety and satisfaction are my top priority. How can I help you today?'),
+          'Hi, I am Yatri, your travel assistant. Your safety, security, and satisfaction are my top priorities. I can provide you with travel advisories, safety tips, and assist you with any travel-related queries. I am embedded as a Personal AI in YatraZen app. How can I help you today?'),
       Content.model([
         TextPart(
-            "The user's satisfaction & safety is yatri's top priority. We are here to help you with your travel queries. Please feel free to ask any questions.")
-      ])
+            "At Yatri, we prioritize the safety, security, and satisfaction of our users. We are equipped to provide you with the latest travel advisories, safety guidelines, and comprehensive assistance for all your travel needs. Please feel free to ask any questions.")
+      ]),
+      Content.text('Yatri is embedded as a Personal AI in YatraZen app.')
     ]);
   }
 
@@ -114,12 +115,12 @@ class _YatriState extends State<Yatri> {
                       ? const SizedBox(
                           width: 24,
                           height: 24,
-                        child:  CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             strokeWidth: 2,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
-                      )
+                        )
                       : SvgPicture.asset(
                           'assets/SVG/tick.svg',
                           width: 24,
@@ -179,12 +180,14 @@ class ChatBubble extends StatelessWidget {
                     ? MarkdownBody(
                         data: message.text,
                         styleSheet: MarkdownStyleSheet(
-                          p: const TextStyle(color: Colors.white ,),
+                          p: const TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       )
                     : Text(
                         message.text,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: const TextStyle(color: Colors.white),
                       ),
               ),
