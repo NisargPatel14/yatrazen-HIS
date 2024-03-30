@@ -19,11 +19,38 @@ class _YatriState extends State<Yatri> {
   @override
   void initState() {
     super.initState();
-    // Initialize the model and make api requests
+    const apiKey =
+        'AIzaSyBNwRlGhl_v2JBd1L5rp-FOTcJVIM84Uec'; // Replace with your actual API key
+    _model = GenerativeModel(
+      model: 'gemini-pro',
+      apiKey: apiKey,
+      generationConfig: GenerationConfig(maxOutputTokens: 300),
+    );
+    _chat = _model.startChat(history: [
+      Content.text(
+          'Hi, I am Yatri, your travel assistant. Your safety and satisfaction are my top priority. How can I help you today?'),
+      Content.model([
+        TextPart(
+            "The user's satisfaction & safety is yatri's top priority. We are here to help you with your travel queries. Please feel free to ask any questions.")
+      ])
+    ]);
   }
 
   Future<void> sendMessage(String? text) async {
-    // Add user message to the chat and clear the text field
+    if (text != null && text.isNotEmpty) {
+      try {
+        var content = Content.text(text);
+        var response = await _chat.sendMessage(content);
+        setState(() {
+          _messages.add(ChatMessage(text: text, isUser: true));
+          _messages.add(ChatMessage(text: response.text ?? "", isUser: false));
+        });
+        _controller.clear();
+      } catch (error) {
+        // Handle error here, e.g., display an error message to the user
+        print('Error sending message: $error');
+      }
+    }
   }
 
   @override
@@ -76,17 +103,34 @@ class _YatriState extends State<Yatri> {
                 ),
                 IconButton(
                   style: ButtonStyle(
-                    padding: MaterialStateProperty.all(const EdgeInsets.all(16)),
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(16)),
                     backgroundColor: MaterialStateColor.resolveWith(
                         (states) => const Color.fromARGB(255, 41, 105, 214)),
                   ),
-                  icon: SvgPicture.asset(
-                    'assets/SVG/tick.svg',
-                    width: 24,
-                    height: 24,
-                  ), // Removed 'const' here
-                  onPressed: () => sendMessage(_controller.text),
+                  icon: _isLoading
+                      ? CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : SvgPicture.asset(
+                          'assets/SVG/tick.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                  onPressed: _isLoading
+                      ? null
+                      : () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          await sendMessage(_controller.text);
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        },
                 ),
+                const SizedBox(width: 16),
               ],
             ),
           ],
