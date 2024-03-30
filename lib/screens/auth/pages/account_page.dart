@@ -55,7 +55,10 @@ class _AccountPageState extends State<AccountPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 
-  
+  signOut() {
+    final AuthAPI appwrite = context.read<AuthAPI>();
+    appwrite.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
