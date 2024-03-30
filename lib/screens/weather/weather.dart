@@ -57,7 +57,7 @@ class _WeatherState extends State<Weather> {
       backgroundColor: const Color(0xff0E1219),
       appBar: AppBar(
         title: Text(
-          "Weather",
+          "jaipur",
           style: Theme.of(context).textTheme.bodySmall,
         ),
         backgroundColor: const Color(0xff0E1219),

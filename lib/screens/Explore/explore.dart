@@ -54,6 +54,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
     final response = await http.get(
       Uri.parse(
           'http://192.168.214.2:5000/senseScore/$city/?api_key=247da0f7b7f3bfcbea1b73a401cb426f'),
+          // replace with your local IP address ( not the localhost )
     );
 
     print('Response status code: ${response.statusCode}');
