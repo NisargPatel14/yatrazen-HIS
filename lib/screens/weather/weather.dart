@@ -23,7 +23,32 @@ class _WeatherState extends State<Weather> {
   }
 
   Future<void> _fetchWeatherData(String location) async {
-    // Fetch current weather
+    final currentWeatherUrl =
+        'http://api.weatherapi.com/v1/current.json?key=4e66b71c66fb48bdb4275305241202&q=$location';
+    final forecastUrl =
+        'http://api.weatherapi.com/v1/forecast.json?key=4e66b71c66fb48bdb4275305241202&q=$location&days=7';
+
+    try {
+      final currentWeatherResponse =
+          await http.get(Uri.parse(currentWeatherUrl));
+      final forecastResponse = await http.get(Uri.parse(forecastUrl));
+
+      if (currentWeatherResponse.statusCode == 200 &&
+          forecastResponse.statusCode == 200) {
+        final currentWeatherData = jsonDecode(currentWeatherResponse.body);
+        final forecastData = jsonDecode(forecastResponse.body);
+
+        setState(() {
+          _currentWeather = currentWeatherData['current']['condition']['text'];
+          _currentTemp = currentWeatherData['current']['temp_c'].toString();
+          _forecast = forecastData['forecast']['forecastday'];
+        });
+      } else {
+        print('Failed to load weather data');
+      }
+    } catch (e) {
+      print('Failed to load weather data: $e');
+    }
   }
 
   @override
