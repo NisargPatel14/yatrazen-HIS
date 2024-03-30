@@ -68,6 +68,42 @@ We appreciate your interest and support for YatraZen! Here are a few ways you ca
 
 [![Star History Chart](https://api.star-history.com/svg?repos=NisargPatel14/yatrazen-HIS&type=Timeline)](https://star-history.com/#ru-dr/v3&Timeline)
 
+## How to Run
+
+To run YatraZen locally, follow these steps:
+
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/yourusername/yatrazen.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd yatrazen
+   ```
+
+3. Install dependencies for the Flutter app:
+   ```bash
+   cd yatrazen
+   flutter pub get
+   ```
+
+4. Start the Flutter development server:
+   ```bash
+   flutter run
+   ```
+
+5. Ensure that the server is hosted on localhost for proper functionality, as sometimes the security score might not get fetched due to server malfunctions when deployed. You can use the following command to start the Node.js server locally: [Download Here](https://github.com/Mahavir-2003/yatrazen-server)
+   ```bash
+   cd ../yatrazen_server
+   npm install
+   npm run dev
+   ```
+
+6. Open your web browser and visit `http://localhost:5000` to view the application.
+
+By following these steps, you can run YatraZen locally on your machine, ensuring a smooth and functional experience.
+
 ## 📧 Contact Us 📧
 
 To request permission for use, report infringement, or seek clarification, please contact us at [rudr26@proton.me](mailto:rudr26@proton.me). We appreciate your cooperation and respect for our intellectual property.
