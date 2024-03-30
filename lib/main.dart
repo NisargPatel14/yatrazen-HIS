@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatrazen/screens/Home/home.dart';
-// import 'package:v4/screens/translate/translate.dart';
+import 'package:yatrazen/screens/translate/translate.dart';
 // import 'package:v4/screens/weather/weather.dart';
-// import 'package:v4/screens/hospital/hospital.dart';
+import 'package:yatrazen/screens/hospital/hospital.dart';
 // import 'package:v4/screens/emergency/emergency.dart';
 // import 'package:v4/screens/yatri/yatri.dart';
 // import 'package:v4/screens/explore/explore.dart';
@@ -70,11 +70,11 @@ class MyApp extends StatelessWidget {
             ),
         '/': (context) => const Home(),
         '/auth': (context) => const Auth(),
-        // '/translate': (context) => const Translate(),
+        '/translate': (context) => const Translate(),
         // '/weather': (context) => const Weather(
         //       location: "Mehsana",
         //     ),
-        // '/hospital': (context) => const Hospital(),
+        '/hospital': (context) => const Hospital(),
         // '/emergency': (context) => const Emergency(),
         // '/yatri': (context) => const Yatri(),
         // '/explore': (context) => const Explore(),
