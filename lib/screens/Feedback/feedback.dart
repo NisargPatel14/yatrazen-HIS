@@ -47,6 +47,7 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
   final _feedbackController = TextEditingController();
   File? _image;
   String? _imageUrl;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -167,17 +168,20 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
                     side: const BorderSide(color: Colors.white),
                   ),
                 ),
-                child: const Text('Upload Image', style: TextStyle(color: Colors.white)),
+                child: const Text('Upload Image',
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _submitForm();
-                  }
-                },
+                onPressed: _isLoading
+                    ? null
+                    : () {
+                        if (_formKey.currentState!.validate()) {
+                          _submitForm();
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff0E1219),
                   shape: RoundedRectangleBorder(
@@ -185,9 +189,20 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
                     side: const BorderSide(color: Colors.white),
                   ),
                 ),
-                child: const Text('Submit', style: TextStyle(color: Colors.white),
+                child: _isLoading
+                    ? const SizedBox(
+                        height: 10,
+                        width: 10,
+                      child:  CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                    )
+                    : const Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white),
+                      ),
               ),
-            ),
             ),
           ],
         ),
@@ -196,6 +211,9 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
   }
 
   void _submitForm() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (_image != null) {
       final cloudinary =
           CloudinaryPublic('dfdrjhn9i', 'uikdpdqh', cache: false);
@@ -244,5 +262,9 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
     } else {
       print('Failed to submit form: ${response.body}');
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
