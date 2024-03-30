@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:v4/controllers/location_controller.dart';
+import 'package:yatrazen/controllers/location_controller.dart';
+import 'package:get/get.dart';
 
 class Hospital extends StatefulWidget {
   const Hospital({super.key});
@@ -15,7 +18,7 @@ class _HospitalState extends State<Hospital>
   LatLng _initialPosition = const LatLng(0, 0);
   List<dynamic> _nearbyHospitals = [];
 
-  // final locationController = Get.find<LocationController>();
+  final locationController = Get.find<LocationController>();
 
   @override
   bool get wantKeepAlive => true;
@@ -32,7 +35,21 @@ class _HospitalState extends State<Hospital>
   }
 
   Future<void> _fetchNearbyHospitals() async {
-   // fetch nearby hospitals using Google Places API
+    const apiKey =
+        'AIzaSyA3wfl35CzCuXjk1wCkz64hZawNYyWjHDg'; // Replace with your Google Places API key
+    const radius = 1500;
+    final url =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=hospital&location=${_initialPosition.latitude},${_initialPosition.longitude}&radius=$radius&type=hospitals&key=$apiKey';
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        _nearbyHospitals = data['results'];
+      });
+    } else {
+      throw Exception('Failed to fetch nearby hospitals');
+    }
   }
 
   @override
