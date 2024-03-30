@@ -9,7 +9,6 @@ class Auth extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final AuthAPI authAPI = context.read<AuthAPI>();
-      // Auth API is not yet initialized
       bool isLoggedIn = authAPI.status == AuthStatus.authenticated;
       String? username = authAPI.username;
 

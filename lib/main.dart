@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(LocationController());
+    // location controller is not working properly
     final value = context.watch<AuthAPI>().status;
     print('TOP CHANGE Value changed to: $value!');
 
