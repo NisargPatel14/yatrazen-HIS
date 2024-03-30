@@ -19,30 +19,47 @@ class _NewsState extends State<News> {
     fetchNews();
   }
 
-  Future<void> fetchNews() async {
-    try {
-      const apiKey =
-          "30a7f133922d4cb4a1d89c10fdd4759d"; // Replace with your News API key
-      const apiUrl = "https://newsapi.org/v2/";
-      const queryString = "travel safety";
-      const type = "everything";
-      const sorting = "popularity";
-      final response = await http.get(Uri.parse(
-          '$apiUrl$type?q=$queryString&sortBy=$sorting&apiKey=$apiKey'));
+  final commonParams = {
+    "lang": "en",
+    "sort_by": "date",
+    "topic": "travel",
+    "page_size": "20",
+    "page": "1",
+  };
 
-      if (response.statusCode == 200) {
-        final parsedResponse = jsonDecode(response.body);
-        setState(() {
-          news = parsedResponse['articles'].take(10).toList();
-        });
-      } else {
-        throw Exception('Failed to load news');
-      }
-    } catch (error) {
-      // ignore: avoid_print
-      print(error);
+Future<void> fetchNews() async {
+  try {
+    const apiKey = "KNYKNyVwCPOB-hdJPcNtPTwhL8UD9ZX2zv1d5ov2M30";
+    const apiUrl = "https://api.newscatcherapi.com/v2/search";
+    const queryString = "travel safety";
+    final params = {
+      ...commonParams,
+      "q":
+          "($queryString)" 
+          // AND (welcomed OR celebrated OR loved OR succeeded OR joyful OR victorious OR flourished OR thrived OR admired OR honored OR delighted OR enthusiastic OR grateful OR content OR excited OR happy OR optimistic OR radiant OR triumphant OR prosperous OR killed OR robbed OR arrested OR hated OR failed OR rejected OR betrayed OR suffered OR lost OR misfortune OR despair OR depressed OR miserable OR abandoned OR lonely OR defeated OR desperate OR forsaken OR ruined OR wretched)",
+    };
+
+    final uri = Uri.parse(apiUrl).replace(queryParameters: params);
+    final response = await http.get(uri, headers: {"x-api-key": apiKey});
+
+    if (response.statusCode == 200) {
+      final parsedResponse = jsonDecode(response.body);
+      setState(() {
+        news = parsedResponse['articles'].map((article) => {
+          'title': article['title'],
+          'description': article['summary'],
+          'url': article['link'],
+          'urlToImage': article['media'],
+        }).toList();
+      });
+    } else {
+      throw Exception('Failed to load news');
     }
+  } catch (error) {
+    // ignore: avoid_print
+    print(error);
   }
+}
 
   @override
   Widget build(BuildContext context) {
