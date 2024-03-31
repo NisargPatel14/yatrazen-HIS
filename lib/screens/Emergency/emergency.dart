@@ -18,10 +18,9 @@ class _EmergencyState extends State<Emergency> {
   @override
   void initState() {
     super.initState();
-    var locationController = Get.put(LocationController());
     detector = ShakeDetector.autoStart(onPhoneShake: () {
       print("Shake detected");
-      locationController?.getCurrentLocation();
+      Get.find<LocationController>().getCurrentLocation();
       setState(() {
         isShakeDetected = true;
       });
