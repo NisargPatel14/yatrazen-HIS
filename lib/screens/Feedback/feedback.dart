@@ -51,160 +51,163 @@ class _FeedbackFormContentState extends State<FeedbackFormContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 10.0), // adjust the value as needed
-              child: TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                    labelText: 'Name',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white))),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 10.0), // adjust the value as needed
-              child: TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white))),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 10.0), // adjust the value as needed
-              child: TextFormField(
-                controller: _feedbackController,
-                decoration: const InputDecoration(
-                    labelText: 'Feedback',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white))),
-                style: const TextStyle(color: Colors.white),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your feedback';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  final picker = ImagePicker();
-                  final pickedFile = await showDialog<File>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SimpleDialog(
-                        title: const Text('Select option'),
-                        children: <Widget>[
-                          SimpleDialogOption(
-                            onPressed: () async {
-                              final pickedFile = await picker.pickImage(
-                                  source: ImageSource.camera);
-                              if (pickedFile != null) {
-                                Navigator.pop(context, File(pickedFile.path));
-                              }
-                            },
-                            child: const Text('Take a picture'),
-                          ),
-                          SimpleDialogOption(
-                            onPressed: () async {
-                              final pickedFile = await picker.pickImage(
-                                  source: ImageSource.gallery);
-                              if (pickedFile != null) {
-                                Navigator.pop(context, File(pickedFile.path));
-                              }
-                            },
-                            child: const Text('Choose from gallery'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-
-                  if (pickedFile != null) {
-                    setState(() {
-                      _image = pickedFile;
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff0E1219),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.white),
-                  ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        margin: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 10.0), // adjust the value as needed
+                child: TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white))),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
                 ),
-                child: const Text('Upload Image',
-                    style: TextStyle(color: Colors.white)),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: ElevatedButton(
-                onPressed: _isLoading
-                    ? null
-                    : () {
-                        if (_formKey.currentState!.validate()) {
-                          _submitForm();
-                        }
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 10.0), // adjust the value as needed
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white))),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 10.0), // adjust the value as needed
+                child: TextFormField(
+                  controller: _feedbackController,
+                  decoration: const InputDecoration(
+                      labelText: 'Feedback',
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white))),
+                  style: const TextStyle(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your feedback';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final picker = ImagePicker();
+                    final pickedFile = await showDialog<File>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                          title: const Text('Select option'),
+                          children: <Widget>[
+                            SimpleDialogOption(
+                              onPressed: () async {
+                                final pickedFile = await picker.pickImage(
+                                    source: ImageSource.camera);
+                                if (pickedFile != null) {
+                                  Navigator.pop(context, File(pickedFile.path));
+                                }
+                              },
+                              child: const Text('Take a picture'),
+                            ),
+                            SimpleDialogOption(
+                              onPressed: () async {
+                                final pickedFile = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (pickedFile != null) {
+                                  Navigator.pop(context, File(pickedFile.path));
+                                }
+                              },
+                              child: const Text('Choose from gallery'),
+                            ),
+                          ],
+                        );
                       },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff0E1219),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: const BorderSide(color: Colors.white),
+                    );
+      
+                    if (pickedFile != null) {
+                      setState(() {
+                        _image = pickedFile;
+                      });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff0E1219),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(color: Colors.white),
+                    ),
                   ),
+                  child: const Text('Upload Image',
+                      style: TextStyle(color: Colors.white)),
                 ),
-                child: _isLoading
-                    ? const SizedBox(
-                        height: 10,
-                        width: 10,
-                      child:  CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                    )
-                    : const Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.white),
-                      ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: ElevatedButton(
+                  onPressed: _isLoading
+                      ? null
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            _submitForm();
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff0E1219),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(color: Colors.white),
+                    ),
+                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 10,
+                          width: 10,
+                        child:  CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                      )
+                      : const Text(
+                          'Submit',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
