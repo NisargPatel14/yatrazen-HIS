@@ -88,10 +88,10 @@ class _EmergencyState extends State<Emergency> {
                                   side: const BorderSide(color: Colors.white),
                                 ),
                               ),
-                              child: Text(
-                                'Emergency Contact: $contactNumber',
-                                 style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255))
-                              ),
+                              child: Text('Emergency Contact: $contactNumber',
+                                  style: const TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255))),
                             ),
                           );
                         }),
@@ -107,6 +107,16 @@ class _EmergencyState extends State<Emergency> {
                             textAlign: TextAlign.center,
                           ),
                         ),
+                      // create a button to trigger shake detection when pressed
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.find<LocationController>().getCurrentLocation();
+                          setState(() {
+                            isShakeDetected = true;
+                          });
+                        },
+                        child: const Text('Help!'),
+                      ),
                     ],
                   ),
           ),
