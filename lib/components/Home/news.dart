@@ -22,8 +22,8 @@ class _NewsState extends State<News> {
   final commonParams = {
     "lang": "en",
     "sort_by": "date",
-    "topic": "travel",
-    "page_size": "20",
+    "topic": "(travel) OR (tourism)",
+    "page_size": "10",
     "page": "1",
   };
 
