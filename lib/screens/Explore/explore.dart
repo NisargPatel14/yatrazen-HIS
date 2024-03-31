@@ -23,6 +23,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
   double mapHeight = 0;
   bool isFullScreen = false;
   bool isLiveLocationOn = false;
+  bool _isLoading = false;
 
   final LatLng _initialPosition = const LatLng(0, 0);
 
@@ -54,7 +55,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
     final response = await http.get(
       Uri.parse(
           'http://192.168.214.2:5000/senseScore/$city/?api_key=247da0f7b7f3bfcbea1b73a401cb426f'),
-          // replace with your local IP address ( not the localhost )
+      // replace with your local IP address ( not the localhost )
     );
 
     print('Response status code: ${response.statusCode}');
@@ -343,17 +344,25 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      Position position =
-                          await locationController.getPosition();
-                      String city = await fetchCity(
-                          position.latitude, position.longitude);
-                      List<int> newScores = await fetchScore(city);
-                      print('City: $city');
-                      setState(() {
-                        scores = newScores;
-                      });
-                    },
+                    onPressed: _isLoading
+                        ? null
+                        : () async {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            Position position =
+                                await locationController.getPosition();
+                            String city = await fetchCity(
+                                position.latitude, position.longitude);
+                            List<int> newScores = await fetchScore(city);
+                            print('City: $city');
+                            setState(() {
+                              scores = newScores;
+                            });
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff8AE990),
                       shape: RoundedRectangleBorder(
@@ -361,7 +370,15 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                         side: const BorderSide(color: Colors.white),
                       ),
                     ),
-                    child: const Text('Fetch Score',
+                    child:
+                    _isLoading
+                        ? const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator( color: Colors.white, strokeWidth: 2,)
+                          )
+                        :                    
+                     const Text('Fetch Score',
                         style: TextStyle(color: Colors.black)),
                   ),
                 ],
